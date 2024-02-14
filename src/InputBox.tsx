@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 
 interface InputBoxProps {
@@ -9,7 +9,14 @@ interface InputBoxProps {
 }
 
 const InputBox: React.FC<InputBoxProps> = ({operator,previousResult,inputValue,setInputValue}) => {
-  const displayValue = operator ? previousResult.toString() + operator + inputValue : previousResult.toString();
+const isCalculationMode = operator !== "" && previousResult !== null;
+  const displayValue = isCalculationMode ? `${previousResult}${operator}${inputValue}` : inputValue;
+
+  useEffect(() => {
+    if (isNaN(inputValue)) {
+      alert("Enter Numbers only!")
+    }
+  },[inputValue]);
 
   return (
     <div className="inputbox">
